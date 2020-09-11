@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace VideoBinarytoGifBinary.Models
+﻿namespace VideoBinarytoGifBinary.Models
 {
     public class VideoFile
 

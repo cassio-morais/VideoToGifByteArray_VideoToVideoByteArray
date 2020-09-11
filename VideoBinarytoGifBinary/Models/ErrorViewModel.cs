@@ -1,5 +1,3 @@
-using System;
-
 namespace VideoBinarytoGifBinary.Models
 {
     public class ErrorViewModel

@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 using VideoBinarytoGifBinary.Data.Entity;
 using VideoBinarytoGifBinary.Models;
 using VideoBinarytoGifBinary.Utils;
@@ -12,16 +12,14 @@ namespace VideoBinarytoGifBinary.Controllers
     {
         private readonly Context _context;
 
-        public VideosController(Context context){
+        public VideosController(Context context)
+        {
             _context = context;
         }
-             
+
 
         public IActionResult Index()
         {
-         
-            
-            
 
             return View();
         }
@@ -35,7 +33,7 @@ namespace VideoBinarytoGifBinary.Controllers
 
         public IActionResult VideoToGif()
         {
-            
+
             return View();
         }
 
@@ -49,8 +47,8 @@ namespace VideoBinarytoGifBinary.Controllers
 
             var gifPath = await ConverterVideoToGif.Converter(filePath);
 
-            var gifFileByteArray = await  GifToByteArray.LoadGifFileFromDiskandReturnAByteArray(gifPath);
-                           
+            var gifFileByteArray = await GifToByteArray.LoadGifFileFromDiskandReturnAByteArray(gifPath);
+
             var gifFileByteArrayCompressed = await CompressByteFile.Compress(gifFileByteArray);
 
             Console.WriteLine("gif byte array comprimido: " + gifFileByteArrayCompressed.Length);
