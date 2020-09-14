@@ -19,11 +19,6 @@ namespace VideoBinarytoGifBinary.Controllers
         {
             var videos = await _videoService.ListAsync();
 
-            if (videos == null)
-            {
-                return NotFound();
-            }
-
             return View(videos);
         }
 
@@ -38,11 +33,13 @@ namespace VideoBinarytoGifBinary.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadVideo(IFormFile file)
         {
+            if (!file.FileName.EndsWith(".mp4")) // implementar
+            {
+                return NotFound(); // implementar
+            }
 
             await _videoService.SaveAsync(file);
             return RedirectToAction(nameof(Index));
-
         }
-
     }
 }

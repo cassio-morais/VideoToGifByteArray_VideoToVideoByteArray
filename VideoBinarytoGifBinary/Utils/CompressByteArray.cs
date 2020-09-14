@@ -10,12 +10,12 @@ namespace VideoBinarytoGifBinary.Utils
         {
             using MemoryStream CompressedByteFile = new MemoryStream();
             {
-                using DeflateStream ds = new DeflateStream(CompressedByteFile, CompressionLevel.Optimal);
+                using GZipStream ds = new GZipStream(CompressedByteFile, CompressionLevel.Optimal);
                 {
                     await ds.WriteAsync(byteFile, 0, byteFile.Length);
-                    return CompressedByteFile.ToArray();
 
                 }
+                return CompressedByteFile.ToArray();
             }
         }
     }

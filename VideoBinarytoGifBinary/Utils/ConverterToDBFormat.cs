@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
 using System.Threading.Tasks;
 
 namespace VideoBinarytoGifBinary.Utils
@@ -17,18 +16,14 @@ namespace VideoBinarytoGifBinary.Utils
         }
 
 
-        public async Task<string> Converter(IFormFile file)
+        public async Task<byte[]> Converter(IFormFile file)
         {
             var byteArray = await _videoToByteArray.Converter(file);
 
-            //var byteArrayCompressed = await _compressByteArray.Compress(byteArray);
+            var byteArrayCompressed = await _compressByteArray.Compress(byteArray);
 
-            var VideoToBase64 = Convert.ToBase64String(byteArray);
-
-            return VideoToBase64;
+            return byteArrayCompressed;
 
         }
-
-
     }
 }

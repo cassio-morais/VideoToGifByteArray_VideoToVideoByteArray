@@ -26,10 +26,12 @@ namespace VideoBinarytoGifBinary
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped<VideoService, VideoService>();
+            services.AddScoped<ConverterToDBFormat, ConverterToDBFormat>();
             services.AddScoped<VideoToByteArray, VideoToByteArray>();
             services.AddScoped<CompressByteArray, CompressByteArray>();
-            services.AddScoped<ConverterToDBFormat, ConverterToDBFormat>();
-            services.AddScoped<VideoService, VideoService>();
+            services.AddScoped<ConverterToViewFormat, ConverterToViewFormat>();
+            services.AddScoped<DescompressByteArray, DescompressByteArray>();
 
         }
 

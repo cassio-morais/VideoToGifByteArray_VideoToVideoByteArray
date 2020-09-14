@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using VideoBinarytoGifBinary.Data.Entity;
 using VideoBinarytoGifBinary.Models;
@@ -13,22 +12,33 @@ namespace VideoBinarytoGifBinary.Services
     {
         private readonly Context _context;
         private readonly ConverterToDBFormat _converterToDBFormat;
+        private readonly ConverterToViewFormat _converterToViewFormat;
 
-        public VideoService(Context context, ConverterToDBFormat converterToDBFormat)
+        public VideoService(Context context, ConverterToDBFormat converterToDBFormat, ConverterToViewFormat converterToViewFormat)
         {
             _context = context;
             _converterToDBFormat = converterToDBFormat;
+            _converterToViewFormat = converterToViewFormat;
         }
 
         public async Task<IEnumerable<Video>> ListAsync()
         {
-            return  await _context.Videos.ToListAsync();
+            var videosToConverterToBase64 = await _context.Videos.ToListAsync();
+            var videosBase64 = new List<Video>();
+
+            foreach (var video in videosToConverterToBase64)
+            {
+                var vid64 = await _converterToViewFormat.Converter(video);
+                videosBase64.Add(vid64);
+            };
+
+            return videosBase64;
         }
 
         public async Task SaveAsync(IFormFile file)
         {
-            var videoBase64 = await _converterToDBFormat.Converter(file);
-            var video = new Video() { VideoBase64 = videoBase64 };
+            var videoByteArray = await _converterToDBFormat.Converter(file);
+            var video = new VideoByteArray { VideoByte = videoByteArray };
             await _context.AddAsync(video);
             await _context.SaveChangesAsync();
         }
