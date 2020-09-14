@@ -1,10 +1,10 @@
 ﻿namespace VideoBinarytoGifBinary.Models
 {
-    public class VideoFile
+    public class Video
 
     {
         public int Id { get; set; }
-        public byte[] ByteFile { get; set; }
+        public string VideoBase64 { get; set; }
 
     }
 }

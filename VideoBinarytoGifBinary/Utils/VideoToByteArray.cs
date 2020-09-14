@@ -6,16 +6,13 @@ namespace VideoBinarytoGifBinary.Utils
 {
     public class VideoToByteArray
     {
-
-        public static async Task<byte[]> Converter(IFormFile file)
+        public async Task<byte[]> Converter(IFormFile file)
         {
-
             using var ms = new MemoryStream();
             await file.CopyToAsync(ms);
             var fileFormatToBytes = ms.ToArray();
 
             return fileFormatToBytes;
-
         }
     }
 }

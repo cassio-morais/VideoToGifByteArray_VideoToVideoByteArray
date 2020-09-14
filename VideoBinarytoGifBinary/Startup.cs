@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using VideoBinarytoGifBinary.Data.Entity;
+using VideoBinarytoGifBinary.Services;
+using VideoBinarytoGifBinary.Utils;
 
 namespace VideoBinarytoGifBinary
 {
@@ -21,7 +23,14 @@ namespace VideoBinarytoGifBinary
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<Context>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<VideoToByteArray, VideoToByteArray>();
+            services.AddScoped<CompressByteArray, CompressByteArray>();
+            services.AddScoped<ConverterToDBFormat, ConverterToDBFormat>();
+            services.AddScoped<VideoService, VideoService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +57,7 @@ namespace VideoBinarytoGifBinary
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Videos}/{action=VideoToGif}/{id?}");
+                    pattern: "{controller=Videos}/{action=Index}/{id?}");
             });
         }
     }

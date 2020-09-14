@@ -11,7 +11,7 @@ namespace VideoBinarytoGifBinary.Data.Entity
 
         }
 
-        public DbSet<VideoFile> VideoFiles { get; set; }
+        public DbSet<Video> Videos { get; set; }
 
     }
 }
